@@ -1,0 +1,77 @@
+<form>
+	<div class="form-group">
+		<div class="input-group">
+			<div class="input-group-addon"><i class="fa fa-search"></i></div>
+			<input type="text" class="form-control" placeholder="Search" ng-model="search">
+			<div class="input-group-addon"></div>
+		</div>
+	</div>
+</form>
+<table class="table table-bordered table-striped table-hover table-responsive">
+	<thead>
+		<tr>
+			<th class="col-md-1 text-center">
+				<a href="#" ng-click="sortType='id'; sortReverse=!sortReverse">Id<span ng-show="sortType=='id' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+			<th class="col-md-3 text-center">
+				<a href="#" ng-click="sortType='brand'; sortReverse=!sortReverse">Brand<span ng-show="sortType=='brand' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='brand' && sortReverse" class="fa fa-caret-up"></span></a> /
+				<a href="#" ng-click="sortType='model'; sortReverse=!sortReverse">Model<span ng-show="sortType=='model' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='model' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+			<th class="col-md-3 text-center">
+				<a href="#" ng-click="sortType='year'; sortReverse=!sortReverse">Year<span ng-show="sortType=='year' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'year' && sortReverse" class="fa fa-caret-up"></span></a> /
+				<a href="#" ng-click="sortType='color'; sortReverse=!sortReverse">Color<span ng-show="sortType=='color' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'color' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+			<th class="col-md-3 text-center">
+				<a href="#" ng-click="sortType='start'; sortReverse=!sortReverse">Start Price<span ng-show="sortType=='start' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='start' && sortReverse" class="fa fa-caret-up"></span></a> /
+				<a href="#" ng-click="sortType='buyout'; sortReverse=!sortReverse">Buyout<span ng-show="sortType=='buyout' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='buyout' && sortReverse" class="fa fa-caret-up"></span></a> /
+				<a href="#" ng-click="sortType='highest'; sortReverse=!sortReverse">Highest Bid<span ng-show="sortType=='highest' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='highest' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+			<th class="col-md-2 text-center"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr dir-paginate="car in filteredCars =(cars | orderBy:sortType:sortReverse | filter:search | itemsPerPage: 10)">
+			<td class="text-center">{{car.id}}</td>
+			<td class="text-center">
+				<a href="car/{{ car.id }}">{{car.brand || "Not provided"}} : {{car.model || "Not provided"}}</a>
+			</td>
+			<td class="text-center">
+				Year: {{car.year || "Not provided"}}<br> Color: {{car.color || "Not provided"}}
+			</td>
+			<td class="text-center">
+				{{highestBid}} Buyout: <b class="text-info">{{(car.price | currency : "SEK" : 0) || "0"}}</b><br> Highest Bid: <b class="text-success">{{(car.highestBid | currency: 'SEK' : 0) || "No bids placed yet"}}</b>
+			</td>
+			<td ng-controller="bidController">
+				<form ng-submit="bidOnCar()" name="bidForm" ng-show="isLoggedIn" novalidate>
+					<div ng-hide="car.sellerId === {{userId !== null ? userId : -1}}">
+						<input class="btn btn-success" type="button" ng-hide="bidNow || confirmBuyout" ng-click="bidNow=!bidNow" value="Place bid!">
+						<input class="btn btn-info" type="button" ng-show="bidNow" ng-click="bidNow=!bidNow" value="Cancel">
+						<input class="btn {{bidForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" ng-show="bidNow" value="Confirm bid" ng-disabled="bidForm.$invalid">
+						<input class="form-control" type="number" ng-model="bidPrice" ng-show="bidNow" value="{{car.highestBid}}" min="{{car.highestBid}}" max="{{car.price}}" required>						
+
+						<input class="btn btn-danger" type="submit" ng-show="confirmBuyout" value="Confirm" ng-click="buyout(car.id)">
+						<input class="btn btn-info" type="button" ng-click="confirmBuyout=!confirmBuyout" ng-hide="bidNow || confirmBuyout" value="Buyout">
+						<input class="btn btn-info" type="button" ng-show="confirmBuyout" ng-click="confirmBuyout=!confirmBuyout" value="Cancel">
+					</div>
+					<div ng-show="car.sellerId === {{userId !== null ? userId : -1}}">
+						<a class="btn btn-success" href="updateCar/{{car.id}}" ng-hide="car.sold">Update car</a>
+						<p class="text-center" ng-show="car.sold">Cannot update a sold car</p>
+					</div>
+				</form>
+				<div ng-show="!isLoggedIn">
+					<a class="btn btn-success" href="login">Place Bid!</a>
+					<a class="btn btn-info" href="login">Buyout</a>
+				</div>
+			</td>
+		</tr>
+		<tr ng-hide="filteredCars.length">
+			<td class="text-center" colspan="5">
+				<h3>No cars matched your search</h3>
+			</td>
+		</tr>
+
+	</tbody>
+</table>
+<div class="text-center">
+	<dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+</div>

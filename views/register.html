@@ -1,0 +1,39 @@
+<h4>Register new user</h4>
+<form ng-controller="registerController" name="registerForm" ng-submit="registerUser();" novalidate>
+	<div class="row">
+		<div class="col-md-12 text-center">
+			<select class="form-control" name="role" ng-model="user.roleId" required>
+					<option value="3">Buyer</option>
+					<option value="2">Seller</option>
+				</select>
+			<span class="text-warning" ng-show="registerForm.role.$touched && registerForm.role.$invalid">The role is required.</span>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" ng-model="user.userName" name="userName" placeholder="Username" autofocus required/>
+			<span class="text-warning" ng-show="registerForm.userName.$touched && registerForm.userName.$invalid">The username is required.</span>
+		
+			<input type="text" class="form-control" ng-model="user.firstName" name="firstName" placeholder="First Name" required />
+			<span class="text-warning" ng-show="registerForm.firstName.$touched && registerForm.firstName.$invalid">The first name is required.</span>
+		
+			<input type="password" class="form-control" ng-model="user.password" name="password" placeholder="Password" required />
+			<span class="text-warning" ng-show="registerForm.password.$touched && registerForm.password.$invalid">The password is required.</span>
+		</div>
+		<div class="col-md-6">
+			<input type="email" class="form-control" ng-model="user.email" name="email" placeholder="Email" required/>
+			<span class="text-warning" ng-show="registerForm.email.$touched && registerForm.email.$invalid">The email is required.</span>
+		
+			<input type="text" class="form-control" ng-model="user.lastName" name="lastName" placeholder="Last Name" required/>
+			<span class="text-warning" ng-show="registerForm.lastName.$touched && registerForm.lastName.$invalid">The last name is required.</span>
+		
+			<input type="password" class="form-control" name="confirm" ng-model="user.confirmPassword" required compare-to="user.password" placeholder="Confirm Password" required />
+			<span class="text-warning" ng-show="registerForm.confirm.$touched && registerForm.confirm.$invalid">The password is required.</span>
+			<span class="text-warning" ng-show="registerForm.confirm.$error.compareTo">Password doesn't match!</span>
+		</div>
+	</div>
+	<div>
+		<a href="/" type="button" class="btn btn-default">Cancel</a>
+		<input class="btn {{registerForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" value="Register" ng-disabled="registerForm.$invalid" />
+	</div>
+</form>

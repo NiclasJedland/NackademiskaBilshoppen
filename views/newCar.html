@@ -1,0 +1,37 @@
+<h3 class="text-center">Add new car</h3>
+<form name="newCarForm" ng-submit="newCar(car);" novalidate>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" ng-model="car.registrationNumber" name="registration" placeholder="Registration number" autofocus required/>
+			<span class="text-warning" ng-show="newCarForm.registration.$touched && newCarForm.registration.$invalid">The registration number is required.</span>
+
+			<input type="text" class="form-control" ng-model="car.brand" name="brand" placeholder="Car Brand" required />
+			<span class="text-warning" ng-show="newCarForm.brand.$touched && newCarForm.brand.$invalid">The brand is required.</span>
+
+			<input type="text" class="form-control" ng-model="car.model" name="model" placeholder="Car Model" required />
+			<span class="text-warning" ng-show="newCarForm.model.$touched && newCarForm.model.$invalid">The model is required.</span>
+
+			<input type="text" class="form-control" ng-model="car.color" name="color" placeholder="Car Color" required />
+			<span class="text-warning" ng-show="newCarForm.color.$touched && newCarForm.color.$invalid">The color is required.</span>
+
+			<select class="form-control" name="year" ng-model="car.year" required>
+					<option value="">Select year</option>
+					<option ng-repeat="year in selectYear" value="{{year}}">{{year}}</option>
+			</select>
+			<span class="text-warning" ng-show="newCarForm.year.$touched && newCarForm.year.$invalid">The year is required.</span>
+
+			<input type="number" class="form-control" ng-model="car.miles" name="miles" placeholder="Miles" min="1" required/>
+			<span class="text-warning" ng-show="newCarForm.miles.$touched && newCarForm.miles.$invalid">The miles is required.</span>
+
+			<input type="number" class="form-control" ng-model="car.price" name="price" placeholder="Minimum Price" min="1" required/>
+			<span class="text-warning" ng-show="newCarForm.price.$touched && newCarForm.price.$invalid">The price is required.</span>
+		</div>
+		<div class="col-md-6">
+			<textarea name="description" placeholder="Description is optional." ng-model="car.description" style="min-width: 100%" rows="13"></textarea>
+		</div>
+	</div>
+	<div>
+		<a href="/" type="button" class="btn btn-default">Cancel</a>
+		<input class="btn {{newCarForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" value="Create car" ng-disabled="newCarForm.$invalid" />
+	</div>
+</form>

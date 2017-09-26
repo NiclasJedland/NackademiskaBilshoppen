@@ -1,0 +1,61 @@
+html {
+	background-color: rgb(39, 43, 48);
+}
+
+body {
+	padding-top: 15px;
+}
+
+a,
+.btn-link {
+	color: #518EC0;
+}
+
+#menu-bar {
+	margin-right: 20px;
+}
+
+.cardbg {
+	width: 50%;
+	text-align: center;
+	background-color: rgb(17, 20, 23);
+	border: 1px solid white;
+	padding: 0px 5px 10px 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.header {
+	background-color: rgb(25, 26, 27);
+	border: 1px solid black;
+}
+
+.underline {
+	text-decoration: underline;
+}
+
+.homeButton {
+	margin-left: 25px;
+}
+
+.center {
+	text-align: center;
+	margin-left: auto;
+}
+
+#chartCanvas {
+	width: 100%;
+	margin-top: 50px;
+}
+
+#failedText {
+	color: red;
+	font-weight: bolder;
+	text-align: center;
+}
+
+#confirmText {
+	color: green;
+	font-weight: bolder;
+	text-align: center;
+}

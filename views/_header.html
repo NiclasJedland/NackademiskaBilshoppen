@@ -1,0 +1,26 @@
+<div ng-controller="loginController" id="menu-bar" class="row">
+	<div class="col-md-5 form-group">
+		<a class="homeButton btn btn-default" href="/">Home</a>
+		<span ng-show="isLoggedIn">
+			<a class="btn btn-danger" ng-click="logoutUser()">Logout</a>
+		</span>
+		<span ng-hide="isLoggedIn">
+			<a class="btn btn-info" href="login">Login</a>
+			<a class="btn btn-success" href="register">Register</a>
+		</span>
+	</div>
+	<div class="col-md-2 text-center" ng-show="isLoggedIn">
+		<p>Logged in as <br> <b class="text-info">{{username}}</b></p>
+	</div>
+	<div class="col-md-5 text-right" ng-show="isAdmin">
+		<span>
+			<a class="btn btn-info" href="charts">Charts</a>
+			<a class="btn btn-info" href="updateCarList">Update a car</a>
+			<a class="btn btn-info" href="newCar">Add new car</a>
+		</span>
+	</div>
+	<div class="col-md-12 text-center">
+		<p id="failedText"></p>
+		<p id="confirmText"></p>
+	</div>
+</div>

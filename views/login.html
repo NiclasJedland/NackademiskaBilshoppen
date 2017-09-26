@@ -1,0 +1,20 @@
+<div class="center">
+	<h4>Login Form</h4>
+	<form name="loginForm" ng-submit="loginUser();" novalidate>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="col-md-offset-3 col-md-6">
+					<input type="text" class="form-control" ng-model="user.username" name="username" placeholder="Username" autofocus required/>
+					<span class="text-warning" ng-show="loginForm.username.$touched && loginForm.username.$invalid">The username is required.</span>
+
+					<input type="password" class="form-control" ng-model="user.password" name="password" placeholder="Password" required />
+					<span class="text-warning" ng-show="loginForm.password.$touched && loginForm.password.$invalid">The password is required.</span>
+				</div>
+			</div>
+		</div>
+		<div>
+			<input class="btn {{loginForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" value="Login" ng-disabled="loginForm.$invalid" />
+			<a href="/" type="button" class="btn btn-default">Cancel</a>
+		</div>
+	</form>
+</div>

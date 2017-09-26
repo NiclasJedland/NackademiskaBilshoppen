@@ -1,0 +1,88 @@
+<div class="col-md-12">
+	<div class="card cardbg">
+		<div class="card-block">
+			<h2 class="card-title">{{car.brand || "Not provided"}} : {{car.model || "Not provided"}}</h2>
+			<div class="row">
+				<div class="col-md-6">
+					<h4 class="underline">Description</h4>
+					<p>{{car.description || "No description provided"}} <br>It has gone for {{car.miles}} miles.</p>
+				</div>
+				<div class="col-md-6">
+					<h4 class="underline">Details</h4>
+					<p>Registration Number: {{car.registrationNumber || "Not provided"}}</p>
+					<p>Year: {{car.year}}</p>
+					<p>Color: {{car.color}}</p>
+					<p>Sold: {{car.sold ? 'Yes' : 'Not yet'}}</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6" ng-hide="car.sold">
+					<h4 class="underline">Prices</h4>
+					<p>Buyout: {{(car.price | currency: 'SEK' : 0) || "0"}}</p>
+					<p>Highest Bid: {{(highestBid | currency: 'SEK' : 0) || "No bids placed yet"}}</p>
+				</div>
+				<div class="col-md-6" ng-show="car.sold">
+					<h4 class="underline">Sold for</h4>
+					<p>{{bids[bids.length-1].bidPrice | currency: 'SEK' : 0}}</p>
+				</div>
+				<div class="col-md-6" ng-hide="car.sold">
+					<h4 class="underline">Buttons</h4>
+					<form ng-controller="bidController" ng-submit="bidOnCar(car)" ng-show="isLoggedIn" name="bidForm">
+						<div ng-hide="car.sellerId === {{userId !== null ? userId : -1}}">
+							<input class="btn btn-success" type="button" ng-hide="bidNow || confirmBuyout" ng-click="bidNow=!bidNow" value="Place bid!">
+							<input class="btn btn-info" type="button" ng-show="bidNow" ng-click="bidNow=!bidNow" value="Cancel">
+							<input class="btn {{bidForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" ng-show="bidNow" value="Confirm bid" ng-disabled="bidForm.$invalid">
+							<input class="form-control" type="number" ng-model="bidPrice" ng-show="bidNow" value="{{highestBid}}" min="{{highestBid}}" max="{{car.price}}" required>
+
+							<input class="btn btn-danger" type="submit" ng-show="confirmBuyout" value="Confirm" ng-click="buyout(car.id)">
+							<input class="btn btn-info" type="button" ng-click="confirmBuyout=!confirmBuyout" ng-hide="bidNow || confirmBuyout" value="Buyout">
+							<input class="btn btn-info" type="button" ng-show="confirmBuyout" ng-click="confirmBuyout=!confirmBuyout" value="Cancel">
+						</div>
+						<div ng-show="car.sellerId === {{userId !== null ? userId : -1}}">
+							<a class="btn btn-success" href="updateCar/{{car.id}}" ng-hide="car.sold">Update car</a>
+							<p class="text-center" ng-show="car.sold">Cannot update a sold car</p>
+						</div>
+					</form>
+					<div ng-show="!isLoggedIn">
+						<a class="btn btn-success" href="login">Place Bid!</a>
+						<a class="btn btn-info" href="login">Buyout</a>
+					</div>
+					<input class="btn btn-info" type="button" value="Show all bidders" ng-click="showBids=!showBids">
+				</div>
+			</div><br>
+			<div class="row">
+				<div class="col-md-12">
+					Updated: {{car.updatedDate | date: "yyyy-MM-dd HH:mm"}} <br> Created: {{car.createdDate | date: "yyyy-MM-dd HH:mm"}}
+					<br> Seller-id: {{car.sellerId}}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<table class="table table-bordered table-striped table-hover table-responsive" ng-show="showBids">
+	<thead>
+		<tr>
+			<th class="text-center">
+				<a href="#" ng-click="sortType='id'; sortReverse=!sortReverse">UserId<span ng-show="sortType=='id' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+			<th class="text-center">
+				<a href="#" ng-click="sortType='date'; sortReverse=!sortReverse">Date created<span ng-show="sortType=='date' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'date' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+			<th class="text-center">
+				<a href="#" ng-click="sortType='bid'; sortReverse=!sortReverse">Bid<span ng-show="sortType=='bid' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'bid' && sortReverse" class="fa fa-caret-up"></span></a>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="bid in bids | orderBy:sortType:sortReverse" ng-show="bids.length">
+			<td>{{bid.bidderId}}</td>
+			<td>{{bid.createdDate | date: "yyyy-MM-dd HH:mm"}}</td>
+			<td>{{(bid.bidPrice | currency : "SEK" : 0) || "0"}}</td>
+		</tr>
+		<tr ng-hide="bids.length">
+			<td class="text-center" colspan="2">
+				<h3>No bids yet</h3>
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,42 @@
+<h4>Update car {{car.name}}</h4>
+<form name="updateForm" ng-submit="updateCar(car);" novalidate>
+	<div class="row">
+		<div class="col-md-6">
+			<input type="text" class="form-control" ng-model="car.registrationNumber" name="registration" placeholder="Registration number" autofocus required/>
+			<span class="text-warning" ng-show="updateForm.registration.$touched && updateForm.registration.$invalid">The registration number is required.</span>
+
+			<input type="text" class="form-control" ng-model="car.brand" name="brand" placeholder="Car Brand" required />
+			<span class="text-warning" ng-show="updateForm.brand.$touched && updateForm.brand.$invalid">The brand is required.</span>
+
+			<input type="text" class="form-control" ng-model="car.model" name="model" placeholder="Car Model" required />
+			<span class="text-warning" ng-show="updateForm.model.$touched && updateForm.model.$invalid">The model is required.</span>
+
+			<input type="text" class="form-control" ng-model="car.color" name="color" placeholder="Car Color" required />
+			<span class="text-warning" ng-show="updateForm.color.$touched && updateForm.color.$invalid">The color is required.</span>
+
+			<select class="form-control" name="year" ng-model="car.year" required>
+					<option ng-repeat="year in selectYear" value="{{year}}" ng-selected="car.year === year">{{year}}</option>					
+			</select>
+			<span class="text-warning" ng-show="updateForm.year.$touched && updateForm.year.$invalid">The year is required.</span>
+
+			<input type="number" class="form-control" ng-model="car.miles" name="miles" placeholder="Miles" min="1" required/>
+			<span class="text-warning" ng-show="updateForm.miles.$touched && updateForm.miles.$invalid">The miles is required.</span>
+
+			<input type="number" class="form-control" ng-model="car.price" name="price" placeholder="Minimum Price" min="1" required/>
+			<span class="text-warning" ng-show="updateForm.price.$touched && updateForm.price.$invalid">The price is required.</span>
+
+		</div>
+		<div class="col-md-6">
+			<textarea name="description" placeholder="Description is optional." ng-model="car.description" style="min-width: 100%" rows="13"></textarea>
+		</div>
+	</div>
+	<div>
+		<a href="/" type="button" class="btn btn-default">Cancel</a>
+		<input class="btn {{updateForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" value="Update car" ng-disabled="updateForm.$invalid" />
+	</div>
+	<div>
+		<input type="number" ng-model="car.seller" name="seller" readonly hidden/>
+		<input type="number" ng-model="car.id" hidden/>
+		<input type="number" ng-model="car.sellerId" hidden/>
+	</div>
+</form>

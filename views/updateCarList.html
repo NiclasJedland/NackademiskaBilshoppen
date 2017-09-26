@@ -1,0 +1,54 @@
+<div class="col-md-12 text-center">
+	<h1>List of cars you are selling.</h1>
+</div>
+<div class="col-md-12">
+	<table class="table table-bordered table-striped table-hover table-responsive">
+		<thead>
+			<tr>
+				<th class="col-md-1 text-center">
+					<a href="#" ng-click="sortType='id'; sortReverse=!sortReverse">Id<span ng-show="sortType=='id' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'id' && sortReverse" class="fa fa-caret-up"></span></a>
+				</th>
+				<th class="col-md-3 text-center">
+					<a href="#" ng-click="sortType='brand'; sortReverse=!sortReverse">Brand<span ng-show="sortType=='brand' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='brand' && sortReverse" class="fa fa-caret-up"></span></a> /
+					<a href="#" ng-click="sortType='model'; sortReverse=!sortReverse">Model<span ng-show="sortType=='model' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='model' && sortReverse" class="fa fa-caret-up"></span></a>
+				</th>
+				<th class="col-md-3 text-center">
+					<a href="#" ng-click="sortType='year'; sortReverse=!sortReverse">Year<span ng-show="sortType=='year' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'year' && sortReverse" class="fa fa-caret-up"></span></a> /
+					<a href="#" ng-click="sortType='color'; sortReverse=!sortReverse">Color<span ng-show="sortType=='color' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'color' && sortReverse" class="fa fa-caret-up"></span></a>
+				</th>
+				<th class="col-md-3 text-center">
+					<a href="#" ng-click="sortType='start'; sortReverse=!sortReverse">Start Price<span ng-show="sortType=='start' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='start' && sortReverse" class="fa fa-caret-up"></span></a> /
+					<a href="#" ng-click="sortType='buyout'; sortReverse=!sortReverse">Buyout<span ng-show="sortType=='buyout' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='buyout' && sortReverse" class="fa fa-caret-up"></span></a> /
+					<a href="#" ng-click="sortType='highest'; sortReverse=!sortReverse">Highest Bid<span ng-show="sortType=='highest' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='highest' && sortReverse" class="fa fa-caret-up"></span></a>
+				</th>
+				<th class="col-md-2 text-center"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr dir-paginate="car in filteredCars =(cars | orderBy:sortType:sortReverse | filter:search | itemsPerPage: 10)">
+				<td class="text-center">{{car.id}}<br>
+					<p ng-show="car.sold" class="text-danger">Car sold!</p>
+				</td>
+				<td class="text-center">
+					<a href="car/{{ car.id }}">{{car.brand || "Not provided"}} : {{car.model || "Not provided"}}</a>
+				</td>
+				<td class="text-center">
+					Year: {{car.year || "Not provided"}}<br> Color: {{car.color || "Not provided"}}
+				</td>
+				<td class="text-center">
+					Start Price: <b>{{(car.price | currency : "SEK" : 0) || "0"}}</b><br> Buyout: <b>{{(car.soldPrice | currency : "SEK" : 0) || "No buyout price"}}</b><br> Highest bid: <b>{{(car.highest | currency : "SEK" : 0) || "No bid placed yet"}}</b>
+				</td>
+				<td>
+					<a class="btn btn-success" href="updateCar/{{car.id}}" ng-hide="car.sold">Update car</a>
+					<p class="text-center" ng-show="car.sold">Cannot update a sold car</p>
+				</td>
+			</tr>
+			<tr ng-hide="filteredCars.length">
+				<td class="text-center" colspan="5">
+					<h3>No cars matched your search</h3>
+				</td>
+			</tr>
+
+		</tbody>
+	</table>
+</div>
