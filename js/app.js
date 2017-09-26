@@ -361,8 +361,6 @@ app.controller('chartDayController', ['$scope', '$routeParams', '$window', 'BidS
 		monthChart();
 
 		function monthChart() {
-			let count25 = 0;
-			let count26 = 0;
 			let chartData = [];
 			CarService.getCars().then(function (result) {
 				let soldCars = result.data.filter(function (car) {
@@ -383,14 +381,9 @@ app.controller('chartDayController', ['$scope', '$routeParams', '$window', 'BidS
 						if (soldDay === (parseInt(day) + 1)) {
 							sum += car.soldPrice;
 						}
-						console.log(soldDay);
 					});
-
-
 					chartData.push(sum);
 				}
-				console.log(count25);
-				console.log(count26);
 			});
 			$scope.chartData.push(chartData);
 		}
