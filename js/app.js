@@ -86,7 +86,6 @@ app.controller('carListController', ['$scope', 'CarService',
 		$scope.data = CarService;
 		$scope.sortType = 'id';
 		$scope.sortReverse = false;
-		$scope.search = "";
 		$scope.cars = null;
 		$scope.test = null;
 

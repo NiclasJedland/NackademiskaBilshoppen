@@ -81,7 +81,7 @@ AccountModule.service("AccountService", ['$rootScope', '$http', '$q',
 					$rootScope.isLoggedIn = checkIfLoggedIn();
 					$rootScope.isAdmin = checkIfAdmin();
 					$rootScope.userId = getUserId();
-					$rootScope.userId = getUsername();
+					$rootScope.username = getUsername();
 
 					showMessage("Logout Successful");
 
