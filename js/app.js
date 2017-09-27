@@ -326,9 +326,8 @@ app.controller('chartController', ['$scope', '$window', 'BidService', 'CarServic
 				for (let month in $scope.months) {
 					let sum = 0;
 
-					//TODO: next 2 lines for only live data!
-					let test = Math.floor(Math.random() * 100000000) + 1;
-					sum = test;
+					// TODO: next line for only live data!
+					sum = Math.floor(Math.random() * 100000000) + 1;
 
 					let monthCars = soldCars.filter(function (car) {
 						let soldMonth = new Date(car.soldDate).getMonth();
@@ -371,9 +370,8 @@ app.controller('chartDayController', ['$scope', '$routeParams', '$window', 'BidS
 				for (let day in $scope.days) {
 					let sum = 0;
 
-					// TODO: next 2 lines for only live data!
-					let test = Math.floor(Math.random() * 100000000) + 1;
-					sum = test;
+					// TODO: next line for only live data!
+					sum = Math.floor(Math.random() * 100000000) + 1;
 
 					let daysCars = soldCars.filter(function (car) {
 						let soldDay = new Date(car.soldDate).getDate();

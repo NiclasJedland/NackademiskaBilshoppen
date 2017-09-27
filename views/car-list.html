@@ -22,7 +22,6 @@
 				<a href="#" ng-click="sortType='color'; sortReverse=!sortReverse">Color<span ng-show="sortType=='color' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType == 'color' && sortReverse" class="fa fa-caret-up"></span></a>
 			</th>
 			<th class="col-md-3 text-center">
-				<a href="#" ng-click="sortType='start'; sortReverse=!sortReverse">Start Price<span ng-show="sortType=='start' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='start' && sortReverse" class="fa fa-caret-up"></span></a> /
 				<a href="#" ng-click="sortType='buyout'; sortReverse=!sortReverse">Buyout<span ng-show="sortType=='buyout' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='buyout' && sortReverse" class="fa fa-caret-up"></span></a> /
 				<a href="#" ng-click="sortType='highest'; sortReverse=!sortReverse">Highest Bid<span ng-show="sortType=='highest' && !sortReverse" class="fa fa-caret-down"></span><span ng-show="sortType=='highest' && sortReverse" class="fa fa-caret-up"></span></a>
 			</th>
@@ -47,7 +46,7 @@
 						<input class="btn btn-success" type="button" ng-hide="bidNow || confirmBuyout" ng-click="bidNow=!bidNow" value="Place bid!">
 						<input class="btn btn-info" type="button" ng-show="bidNow" ng-click="bidNow=!bidNow" value="Cancel">
 						<input class="btn {{bidForm.$valid == true ? 'btn-success' : 'btn-danger'}}" type="submit" ng-show="bidNow" value="Confirm bid" ng-disabled="bidForm.$invalid">
-						<input class="form-control" type="number" ng-model="bidPrice" ng-show="bidNow" value="{{car.highestBid}}" min="{{car.highestBid}}" max="{{car.price}}" required>						
+						<input class="form-control" type="number" ng-model="bidPrice" ng-show="bidNow" value="{{car.highestBid}}" min="{{car.highestBid + 1}}" max="{{car.price}}" required>
 
 						<input class="btn btn-danger" type="submit" ng-show="confirmBuyout" value="Confirm" ng-click="buyout(car.id)">
 						<input class="btn btn-info" type="button" ng-click="confirmBuyout=!confirmBuyout" ng-hide="bidNow || confirmBuyout" value="Buyout">
